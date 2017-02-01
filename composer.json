@@ -1,0 +1,30 @@
+{
+    "name": "gentor/bnp-paribas-pf",
+    "description": "BNP Paribas PF Pricing Service for Laravel",
+    "keywords": [
+        "laravel",
+        "bnp",
+        "paribas",
+        "personal",
+        "financing",
+        "pricing",
+        "service"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeni Nurkov",
+            "email": "evgeni.nurkov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.6",
+        "illuminate/support": "4.2.*|5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gentor\\BnpPF\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
