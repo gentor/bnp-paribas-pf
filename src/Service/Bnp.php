@@ -116,7 +116,7 @@ class Bnp
             $this->merchant,
         ]);
 
-        return $this->client->getResult($urlParams);
+        return $this->getResultData($this->client->getResult($urlParams), 'GoodCategory');
     }
 
     /**
@@ -132,7 +132,7 @@ class Bnp
             $category_id,
         ]);
 
-        return $this->client->getResult($urlParams);
+        return $this->getResultData($this->client->getResult($urlParams), 'GoodType');
     }
 
     /**
