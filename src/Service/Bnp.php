@@ -30,7 +30,6 @@ class Bnp
         $this->merchant = $config['merchant_id'];
         $this->client = new Client(
             $config['certificate'],
-            $config['private_key'],
             $config['password'],
             $config['test_mode']
         );

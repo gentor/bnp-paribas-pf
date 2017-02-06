@@ -14,6 +14,7 @@ class Client
      * Test endpoint
      */
     const TEST_ENDPOINT = 'https://ws-test.bnpparibas-pf.bg/ServicesPricing/';
+
     /**
      * Live endpoint
      */
@@ -23,11 +24,6 @@ class Client
      * @var
      */
     protected $certificate;
-
-    /**
-     * @var
-     */
-    protected $privateKey;
 
     /**
      * @var
@@ -53,14 +49,12 @@ class Client
      * Client constructor.
      *
      * @param      $certificate
-     * @param      $privateKey
      * @param      $password
      * @param bool $testMode
      */
-    public function __construct($certificate, $privateKey, $password, $testMode = false)
+    public function __construct($certificate, $password, $testMode = false)
     {
         $this->certificate = $certificate;
-        $this->privateKey = $privateKey;
         $this->password = $password;
         $this->url = $testMode ? static::TEST_ENDPOINT : static::LIVE_ENDPOINT;
     }
@@ -110,10 +104,7 @@ class Client
             CURLOPT_TIMEOUT => 30,
             CURLOPT_SSLCERT => $this->certificate,
             CURLOPT_SSLCERTTYPE => 'PEM',
-            CURLOPT_SSLCERTPASSWD => '',
-            CURLOPT_SSLKEY => $this->privateKey,
-            CURLOPT_SSLKEYTYPE => 'PEM',
-            CURLOPT_SSLKEYPASSWD => $this->password,
+            CURLOPT_SSLCERTPASSWD => $this->password,
             CURLOPT_SSLVERSION => 1,
             CURLOPT_URL => $this->url . $urlParams,
         ];

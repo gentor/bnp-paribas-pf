@@ -28,6 +28,12 @@ Gentor\BnpPF\Facades\Bnp::class,
 Configuration
 -------------
 
+Convert .pfx certificate to .pem:
+
+```php
+openssl pkcs12 -in <cert.pfx> -out <cert.pem> -passin pass:<password> -passout pass:<password>
+```
+
 Change your default settings in `app/config/bnp.php`:
 
 ```php
@@ -35,7 +41,6 @@ Change your default settings in `app/config/bnp.php`:
 return [
     'merchant_id' => env('BNP_MERCHANT_ID'),
     'certificate' => env('BNP_CERTIFICATE_PATH'),
-    'private_key' => env('BNP_PRIVATE_KEY_PATH'),
     'password' => env('BNP_PASSWORD'),
     'test_mode' => env('BNP_TEST_MODE'),
 ];
