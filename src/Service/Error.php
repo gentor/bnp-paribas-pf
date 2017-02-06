@@ -1,15 +1,15 @@
 <?php
 
-namespace Gentor\BnpPF;
+namespace Gentor\BnpPF\Service;
 
 use Exception;
 
 /**
- * Class BnpError
+ * Class Error
  *
- * @package Gentor\BnpPF
+ * @package Gentor\BnpPF\Service
  */
-class BnpError extends Exception
+class Error extends Exception
 {
     /**
      * @var string|null
@@ -21,7 +21,7 @@ class BnpError extends Exception
      *
      * @param string          $message
      * @param int             $code
-     * @param string|null            $details
+     * @param string|null     $details
      * @param \Exception|null $previous
      */
     public function __construct($message = "", $code = 0, $details = null, Exception $previous = null)

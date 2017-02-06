@@ -1,21 +1,21 @@
 <?php
 
-namespace Gentor\BnpPF;
+namespace Gentor\BnpPF\Service;
 
 
 /**
  * Class Client
  *
- * @package Gentor\BnpPF
+ * @package Gentor\BnpPF\Service
  */
 class Client
 {
     /**
-     *
+     * Test endpoint
      */
     const TEST_ENDPOINT = 'https://ws-test.bnpparibas-pf.bg/ServicesPricing/';
     /**
-     *
+     * Live endpoint
      */
     const LIVE_ENDPOINT = 'https://ws.bnpparibas-pf.bg/ServicesPricing/';
 
@@ -69,7 +69,7 @@ class Client
      * @param $urlParams
      *
      * @return mixed
-     * @throws \Gentor\BnpPF\BnpException
+     * @throws \Gentor\BnpPF\Service\Error
      */
     public function getResult($urlParams)
     {
@@ -83,7 +83,7 @@ class Client
         curl_close($this->curl);
 
         if (200 != $code) {
-            throw new BnpException($error, $code);
+            throw new Error($error, $code);
         }
 
         return $this->xml2obj($result);

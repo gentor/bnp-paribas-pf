@@ -4,6 +4,7 @@ namespace Gentor\BnpPF;
 
 
 use Illuminate\Support\ServiceProvider;
+use Gentor\BnpPF\Service\Bnp;
 
 /**
  * Class BnpServiceProvider
@@ -28,7 +29,7 @@ class BnpServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('bnp', function ($app) {
-            return new BnpService($app['config']['bnp']);
+            return new Bnp($app['config']['bnp']);
         });
     }
 

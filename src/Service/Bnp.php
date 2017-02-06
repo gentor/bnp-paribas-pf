@@ -1,14 +1,14 @@
 <?php
 
-namespace Gentor\BnpPF;
+namespace Gentor\BnpPF\Service;
 
 
 /**
- * Class BnpService
+ * Class Bnp
  *
- * @package Gentor\BnpPF
+ * @package Gentor\BnpPF\Service
  */
-class BnpService
+class Bnp
 {
     /**
      * @var int
@@ -42,7 +42,7 @@ class BnpService
      * @param float|int $down_payment
      *
      * @return mixed
-     * @throws \Gentor\BnpPF\BnpException
+     * @throws \Gentor\BnpPF\Service\Error
      */
     public function getPricingSchemes($price, array $goods, $down_payment = 0)
     {
@@ -65,7 +65,7 @@ class BnpService
      * @param float|int $installment
      *
      * @return mixed
-     * @throws \Gentor\BnpPF\BnpException
+     * @throws \Gentor\BnpPF\Service\Error
      */
     public function getPricingVariants($price, array $goods, $scheme_id, $down_payment = 0, $installment = 0)
     {
@@ -89,7 +89,7 @@ class BnpService
      * @param float|int $down_payment
      *
      * @return mixed
-     * @throws \Gentor\BnpPF\BnpException
+     * @throws \Gentor\BnpPF\Service\Error
      */
     public function calculateLoan($price, array $goods, $variant_id, $down_payment = 0)
     {
@@ -107,7 +107,7 @@ class BnpService
 
     /**
      * @return mixed
-     * @throws \Gentor\BnpPF\BnpException
+     * @throws \Gentor\BnpPF\Service\Error
      */
     public function getGoodCategories()
     {
@@ -123,7 +123,7 @@ class BnpService
      * @param int $category_id
      *
      * @return mixed
-     * @throws \Gentor\BnpPF\BnpException
+     * @throws \Gentor\BnpPF\Service\Error
      */
     public function getGoodTypes($category_id)
     {
@@ -140,13 +140,13 @@ class BnpService
      * @param $attribute
      *
      * @return array
-     * @throws \Gentor\BnpPF\BnpError
+     * @throws \Gentor\BnpPF\Service\Error
      */
     protected function getResultData($object, $attribute)
     {
         if (is_null($object->Data)) {
             if (!empty($object->ErrorCode)) {
-                throw new BnpError($object->ErrorMessage, $object->ErrorCode, $object->ErrorDetails);
+                throw new Error($object->ErrorMessage, $object->ErrorCode, $object->ErrorDetails);
             }
             return [];
         }
