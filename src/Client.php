@@ -86,7 +86,7 @@ class Client
             throw new BnpException($error, $code);
         }
 
-        return $result;
+        return $this->xml2obj($result);
     }
 
     /**
@@ -119,6 +119,39 @@ class Client
         ];
 
         curl_setopt_array($this->curl, $this->curlOptions);
+    }
+
+    /**
+     * @param $xml
+     *
+     * @return mixed
+     */
+    protected function xml2obj($xml)
+    {
+        function normalizeSimpleXML($obj, &$result)
+        {
+            $data = $obj;
+            if (is_object($data)) {
+                $data = get_object_vars($data);
+            }
+            if (is_array($data)) {
+                foreach ($data as $key => $value) {
+                    $res = null;
+                    normalizeSimpleXML($value, $res);
+                    if (($key == '@attributes') && ($key)) {
+                        $result = $res;
+                    } else {
+                        $result[$key] = $res;
+                    }
+                }
+            } else {
+                $result = $data;
+            }
+        }
+
+        $result = [];
+        normalizeSimpleXML(simplexml_load_string($xml), $result);
+        return json_decode(json_encode($result));
     }
 
 }

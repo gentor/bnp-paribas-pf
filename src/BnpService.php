@@ -49,12 +49,12 @@ class BnpService
         $urlParams = implode('/', [
             'GetAvailablePricingSchemes',
             $this->merchant,
-            explode(',', $goods),
+            implode(',', $goods),
             $price,
             $down_payment,
         ]);
 
-        return $this->client->getResult($urlParams);
+        return $this->getResultData($this->client->getResult($urlParams), 'PricingScheme');
     }
 
     /**
@@ -72,14 +72,14 @@ class BnpService
         $urlParams = implode('/', [
             'GetAvailablePricingVariants',
             $this->merchant,
-            explode(',', $goods),
+            implode(',', $goods),
             $price,
             $down_payment,
             $installment,
             $scheme_id,
         ]);
 
-        return $this->client->getResult($urlParams);
+        return $this->getResultData($this->client->getResult($urlParams), 'PricingVariant');
     }
 
     /**
@@ -96,13 +96,13 @@ class BnpService
         $urlParams = implode('/', [
             'CalculateLoan',
             $this->merchant,
-            explode(',', $goods),
+            implode(',', $goods),
             $price,
             $down_payment,
             $variant_id,
         ]);
 
-        return $this->client->getResult($urlParams);
+        return $this->getResultData($this->client->getResult($urlParams), 'CreditProposition');
     }
 
     /**
@@ -133,6 +133,25 @@ class BnpService
         ]);
 
         return $this->client->getResult($urlParams);
+    }
+
+    /**
+     * @param $object
+     * @param $attribute
+     *
+     * @return array
+     * @throws \Gentor\BnpPF\BnpError
+     */
+    protected function getResultData($object, $attribute)
+    {
+        if (is_null($object->Data)) {
+            if (!empty($object->ErrorCode)) {
+                throw new BnpError($object->ErrorMessage, $object->ErrorCode, $object->ErrorDetails);
+            }
+            return [];
+        }
+
+        return $object->Data->{$attribute};
     }
 
 }
