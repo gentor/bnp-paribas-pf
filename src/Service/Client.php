@@ -113,35 +113,40 @@ class Client
     }
 
     /**
+     * @param $obj
+     * @param $result
+     */
+    protected function normalizeSimpleXML($obj, &$result)
+    {
+        $data = $obj;
+        if (is_object($data)) {
+            $data = get_object_vars($data);
+        }
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $res = null;
+                $this->normalizeSimpleXML($value, $res);
+                if (($key == '@attributes') && ($key)) {
+                    $result = $res;
+                } else {
+                    $result[$key] = $res;
+                }
+            }
+        } else {
+            $result = $data;
+        }
+    }
+
+    /**
      * @param $xml
      *
      * @return mixed
      */
     protected function xml2obj($xml)
     {
-        function normalizeSimpleXML($obj, &$result)
-        {
-            $data = $obj;
-            if (is_object($data)) {
-                $data = get_object_vars($data);
-            }
-            if (is_array($data)) {
-                foreach ($data as $key => $value) {
-                    $res = null;
-                    normalizeSimpleXML($value, $res);
-                    if (($key == '@attributes') && ($key)) {
-                        $result = $res;
-                    } else {
-                        $result[$key] = $res;
-                    }
-                }
-            } else {
-                $result = $data;
-            }
-        }
-
         $result = [];
-        normalizeSimpleXML(simplexml_load_string($xml), $result);
+        $this->normalizeSimpleXML(simplexml_load_string($xml), $result);
+
         return json_decode(json_encode($result));
     }
 
