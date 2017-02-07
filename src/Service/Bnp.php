@@ -63,7 +63,7 @@ class Bnp
      * @param float|int $down_payment
      * @param float|int $installment
      *
-     * @return mixed
+     * @return array
      * @throws \Gentor\BnpPF\Service\Error
      */
     public function getPricingVariants($price, array $goods, $scheme_id, $down_payment = 0, $installment = 0)
@@ -78,7 +78,12 @@ class Bnp
             $scheme_id,
         ]);
 
-        return $this->getResultData($this->client->getResult($urlParams), 'PricingVariant');
+        $return = $this->getResultData($this->client->getResult($urlParams), 'PricingVariant');
+        if (!is_array($return)) {
+            return [$return];
+        }
+
+        return $return;
     }
 
     /**
