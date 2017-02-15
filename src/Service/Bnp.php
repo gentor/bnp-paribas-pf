@@ -40,7 +40,7 @@ class Bnp
      * @param array     $goods
      * @param float|int $down_payment
      *
-     * @return mixed
+     * @return array
      * @throws \Gentor\BnpPF\Service\Error
      */
     public function getPricingSchemes($price, array $goods, $down_payment = 0)
@@ -78,12 +78,7 @@ class Bnp
             $scheme_id,
         ]);
 
-        $return = $this->getResultData($this->client->getResult($urlParams), 'PricingVariant');
-        if (!is_array($return)) {
-            return [$return];
-        }
-
-        return $return;
+        return $this->getResultData($this->client->getResult($urlParams), 'PricingVariant');
     }
 
     /**
@@ -92,7 +87,7 @@ class Bnp
      * @param int       $variant_id
      * @param float|int $down_payment
      *
-     * @return mixed
+     * @return array
      * @throws \Gentor\BnpPF\Service\Error
      */
     public function calculateLoan($price, array $goods, $variant_id, $down_payment = 0)
@@ -110,7 +105,7 @@ class Bnp
     }
 
     /**
-     * @return mixed
+     * @return array
      * @throws \Gentor\BnpPF\Service\Error
      */
     public function getGoodCategories()
@@ -126,7 +121,7 @@ class Bnp
     /**
      * @param int $category_id
      *
-     * @return mixed
+     * @return array
      * @throws \Gentor\BnpPF\Service\Error
      */
     public function getGoodTypes($category_id)
@@ -153,6 +148,10 @@ class Bnp
                 throw new Error($object->ErrorMessage, $object->ErrorCode, $object->ErrorDetails);
             }
             return [];
+        }
+
+        if (!is_array($object->Data->{$attribute})) {
+            return [$object->Data->{$attribute}];
         }
 
         return $object->Data->{$attribute};
