@@ -36,8 +36,17 @@ class Bnp
     }
 
     /**
-     * @param float     $price
-     * @param array     $goods
+     * @param string $url
+     * @return void
+     */
+    public function setClientUrl($url)
+    {
+        $this->client->setUrl($url);
+    }
+
+    /**
+     * @param float $price
+     * @param array $goods
      * @param float|int $down_payment
      *
      * @return array
@@ -57,9 +66,9 @@ class Bnp
     }
 
     /**
-     * @param float     $price
-     * @param array     $goods
-     * @param int       $scheme_id
+     * @param float $price
+     * @param array $goods
+     * @param int $scheme_id
      * @param float|int $down_payment
      * @param float|int $installment
      *
@@ -82,9 +91,9 @@ class Bnp
     }
 
     /**
-     * @param float     $price
-     * @param array     $goods
-     * @param int       $variant_id
+     * @param float $price
+     * @param array $goods
+     * @param int $variant_id
      * @param float|int $down_payment
      *
      * @return array

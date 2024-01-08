@@ -60,6 +60,15 @@ class Client
     }
 
     /**
+     * @param string $url
+     * @return void
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
      * @param $urlParams
      *
      * @return mixed
