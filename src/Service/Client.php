@@ -86,7 +86,8 @@ class Client
         curl_close($this->curl);
 
         if (200 != $code) {
-            throw new Error($error, $code);
+            $message = !empty($result) ? $result : $error;
+            throw new Error($message, $code);
         }
 
         return $this->xml2obj($result);
